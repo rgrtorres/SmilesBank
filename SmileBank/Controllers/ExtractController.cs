@@ -26,5 +26,21 @@ namespace SmileBank.Controllers
             Extract.Add(extract);
             return Ok(Extract);
         }
+
+        [HttpPut("UpdateExtract")]
+        public IActionResult Update(Guid id, string description, double amount, bool type, string status)
+        {
+            var found = Extract.Find(x => x.Id == id);
+
+            if (found == null)
+                return NotFound();
+
+            found.Description = description;
+            found.Amount = amount;
+            found.Type = type;
+            found.Status = status;
+
+            return Ok();
+        }
     }
 }

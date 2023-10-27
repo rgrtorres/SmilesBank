@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SmileBank.ContextDB;
 using SmileBank.Interfaces;
 
 namespace SmileBank.Controllers
@@ -8,38 +10,46 @@ namespace SmileBank.Controllers
 
     public class ExtractController : Controller
     {
+        private readonly SmileBankContext context;
+
         public static List<IExtract> Extract = new()
         {
-            new ("Salário", 2857.00, false, "Válido"),
-            new ("Super Mercado Guassu", 128.32, false, "Válido"),
+            new (Guid.NewGuid(), "Salário", 2857.00, false, "Válido"),
+            new (Guid.NewGuid(), "Super Mercado Guassu", 128.32, false, "Válido"),
         };
+
+        public ExtractController()
+        {
+            this.context = context;
+        }
 
         [HttpGet("ListExtract")]
         public IActionResult Index()
         {
-            return Ok(Extract);
+            return Ok(context.Extract.ToList());
         }
 
         [HttpPost("InsertExtract")]
         public IActionResult Insert(IExtract extract)
         {
-            Extract.Add(extract);
+            context.Add(extract);
+
             return Ok(Extract);
         }
 
-        [HttpPut("UpdateExtract")]
-        public IActionResult Update(Guid id, string description, double amount, bool type, string status)
+        [HttpPost("UpdateExtract/{:id}")]
+        public IActionResult Update(filterIExtract filter)
         {
-            var found = Extract.Find(x => x.Id == id);
+            var found = context.Extract.Find(filter.id);
 
             if (found == null)
                 return NotFound();
 
-            found.Description = description;
-            found.Amount = amount;
-            found.Type = type;
-            found.Status = status;
+            found.Description = filter.description;
+            found.Amount = filter.amount;
+            found.Status = filter.status;
 
+            context.Update(found);
             return Ok();
         }
     }

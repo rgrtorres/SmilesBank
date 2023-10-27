@@ -6,10 +6,10 @@
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public double Amount { get; set; }
-        public bool Type { get; set; }
-        public string Status { get; set; }
+        public bool Type { get; set; } /* Type: 0 System 1 Avulso */
+        public string Status { get; set; } /* Válido/Cancelado */
 
-        public IExtract(string description, double amount, bool type, string status)
+        public IExtract(Guid id, string description, double amount, bool type, string status)
         {
             Id = Guid.NewGuid();
             Description = description;

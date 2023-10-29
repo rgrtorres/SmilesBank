@@ -12,29 +12,34 @@ namespace SmileBank.Controllers
     {
         private readonly SmileBankContext context;
 
-        public static List<IExtract> Extract = new()
-        {
-            new (Guid.NewGuid(), "Salário", 2857.00, false, "Válido"),
-            new (Guid.NewGuid(), "Super Mercado Guassu", 128.32, false, "Válido"),
-        };
-
-        public ExtractController()
+        public ExtractController(SmileBankContext context)
         {
             this.context = context;
         }
 
         [HttpGet("ListExtract")]
-        public IActionResult Index()
+        public IActionResult Index(DateTime? startDate, DateTime? endDate)
         {
-            return Ok(context.Extract.ToList());
+            var query = context.Extract;
+            if (startDate == null || endDate == null)
+            {
+                startDate = DateTime.Today.AddDays(-2);
+                endDate = DateTime.Today;
+                return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
+            }
+            else
+            {
+                return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
+            }
         }
 
         [HttpPost("InsertExtract")]
         public IActionResult Insert(IExtract extract)
         {
             context.Add(extract);
+            context.SaveChanges();
 
-            return Ok(Extract);
+            return Ok(extract);
         }
 
         [HttpPost("UpdateExtract/{:id}")]

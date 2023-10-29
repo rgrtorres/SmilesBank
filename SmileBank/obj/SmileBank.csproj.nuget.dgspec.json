@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\Study\\SmileBank\\SmileBank\\SmileBank\\SmileBank.csproj": {}
+    "C:\\dotnet\\SmilesBank\\SmileBank\\SmileBank.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\Study\\SmileBank\\SmileBank\\SmileBank\\SmileBank.csproj": {
+    "C:\\dotnet\\SmilesBank\\SmileBank\\SmileBank.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\Study\\SmileBank\\SmileBank\\SmileBank\\SmileBank.csproj",
+        "projectUniqueName": "C:\\dotnet\\SmilesBank\\SmileBank\\SmileBank.csproj",
         "projectName": "SmileBank",
-        "projectPath": "C:\\Projects\\Study\\SmileBank\\SmileBank\\SmileBank\\SmileBank.csproj",
-        "packagesPath": "C:\\Users\\renan.torres\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\Study\\SmileBank\\SmileBank\\SmileBank\\obj\\",
+        "projectPath": "C:\\dotnet\\SmilesBank\\SmileBank\\SmileBank.csproj",
+        "packagesPath": "C:\\Users\\Renan\\.nuget\\packages\\",
+        "outputPath": "C:\\dotnet\\SmilesBank\\SmileBank\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\renan.torres\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Renan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,8 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://pkgs.dev.azure.com/msc-dev/A_BR241_MSC_Brasil/_packaging/MSC_BRASIL/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -77,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

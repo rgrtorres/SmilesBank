@@ -13,11 +13,11 @@ export class ExtractService {
     constructor (private readonly http: HttpClient) {
         this.http.get<IConfig>('../assets/data/appConfig.json').subscribe(
             (data) => {
-                this.config.apiURL = data.apiURL
+                this.config = data as IConfig
             }
         )
 
-        console.log('API: ', this.config.apiURL)
+        console.log('API: ', this.config)
     }
 
     getExtract() {

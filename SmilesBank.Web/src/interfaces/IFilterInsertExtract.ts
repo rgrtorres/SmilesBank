@@ -1,8 +1,5 @@
-
-export interface IExtract {
-    id: string,
+export interface IFilterInsertExtract {
     description: string,
-    date: Date,
     amount: number,
     type: boolean,
     status: string

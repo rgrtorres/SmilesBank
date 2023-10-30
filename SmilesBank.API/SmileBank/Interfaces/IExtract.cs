@@ -9,7 +9,7 @@
         public bool Type { get; set; } /* Type: 0 System 1 Avulso */
         public string Status { get; set; } /* Válido/Cancelado */
 
-        public IExtract(Guid id, string description, double amount, bool type, string status)
+        public IExtract(string description, double amount, bool type, string status)
         {
             Id = Guid.NewGuid();
             Description = description;

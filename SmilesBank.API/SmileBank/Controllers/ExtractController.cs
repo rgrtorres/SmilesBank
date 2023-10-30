@@ -41,13 +41,13 @@ namespace SmileBank.Controllers
             context.Add(extract);
             context.SaveChanges();
 
-            return Ok(extract);
+            return Ok(context.Extract.ToList());
         }
 
-        [HttpPost("UpdateExtract/{:id}")]
+        [HttpPost("Update")]
         public IActionResult Update(IFilterExtract filter)
         {
-            var found = context.Extract.Find(filter.id);
+            var found = context.Extract.Where(data => data.Id == filter.id).First();
 
             if (found == null)
                 return NotFound();
@@ -57,6 +57,23 @@ namespace SmileBank.Controllers
             found.Status = filter.status;
 
             context.Update(found);
+            context.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost("Cancel")]
+        public IActionResult Cancel(string id)
+        {
+            var found = context.Extract.Where(data => data.Id == Guid.Parse(id)).First();
+
+            if (found == null)
+                return NotFound();
+
+            found.Status = "Cancelado";
+
+            context.Update(found);
+            context.SaveChanges();
+
             return Ok();
         }
     }

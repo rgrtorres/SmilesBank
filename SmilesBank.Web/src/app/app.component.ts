@@ -56,7 +56,10 @@ export class AppComponent implements OnInit {
         this.filterInsert.amount = this.InputAmount
         this.filterInsert.description = this.InputDescription
 
-        console.log(this.filterInsert)
+        this.InputAmount = 0
+        this.InputDescription = ""
+        this.InputId = ""
+
         return this.extractService.insert(this.filterInsert).subscribe(() => this.extracts())
     }
 
@@ -68,7 +71,7 @@ export class AppComponent implements OnInit {
     }
 
     cancelExtract(id: string) {
-        return this.extractService.Cancel(id)
+        return this.extractService.Cancel(id).subscribe(() => this.extracts())
     }
 
     clickCancelEdit() {

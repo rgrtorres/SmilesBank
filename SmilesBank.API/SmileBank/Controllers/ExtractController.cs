@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SmileBank.ContextDB;
 using SmileBank.Interfaces;
 
@@ -62,9 +61,9 @@ namespace SmileBank.Controllers
         }
 
         [HttpPost("Cancel")]
-        public IActionResult Cancel(string id)
+        public IActionResult Cancel(ICancel filter)
         {
-            var found = context.Extract.Where(data => data.Id == Guid.Parse(id)).First();
+            var found = context.Extract.Where(data => data.Id == filter.id).First();
 
             if (found == null)
                 return NotFound();

@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { IExtract } from "src/interfaces/IExtract";
 import { ConfigService } from "./Config.Services";
 import { IFilterInsertExtract } from "src/interfaces/IFilterInsertExtract";
+import { ICancel } from "src/interfaces/ICancel";
+import { catchError } from "rxjs";
 
 @Injectable()
 export class ExtractService {
@@ -17,7 +19,9 @@ export class ExtractService {
     }
 
     Cancel(id: string) {
-        console.log(id)
-        return this.http.post(`${this.config.getApi()}/Cancel`, id)
+        const body = {
+            id: id
+        }
+        return this.http.post<ICancel>(`${this.config.getApi()}/Cancel`, body)
     }
 }

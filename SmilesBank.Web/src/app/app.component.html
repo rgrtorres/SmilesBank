@@ -7,13 +7,30 @@
         </div>
 
         <div class="m-1">
-            <button class="btn btn-primary" (click)="edit === true ? updateExtract(this.InputId) : insertExtract()">{{edit == false ? 'Insert' : 'Edit'}}</button>
+            <button class="btn btn-primary" (click)="edit === true ? updateExtract() : insertExtract()">{{edit == false ? 'Insert' : 'Edit'}}</button>
 
             <button class="btn btn-danger" (click)="clickCancelEdit()" [hidden]="!edit">Cancel</button>
         </div>
     </div>
 
     <hr>
+
+    <div>
+      <h4>Filtrar por Data</h4>
+
+      <div class="d-flex">
+        <div class="m-1">
+          Initial Date: <input type="date" class="form-control" [(ngModel)]="filterDate.startDate">
+        </div>
+
+        <div class="m-1">
+          Final Date: <input type="date" class="form-control" [(ngModel)]="filterDate.endDate">
+        </div>
+      </div>
+      <div class="m-1">
+        <button class="btn btn-primary" (click)="extractsByDate(filterDate)">Filter</button>
+      </div>
+    </div>
 
   <table class="table">
     <thead>

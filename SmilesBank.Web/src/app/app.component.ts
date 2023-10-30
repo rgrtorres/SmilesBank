@@ -29,8 +29,11 @@ export class AppComponent implements OnInit {
         id: "",
         description: "",
         amount: 0,
-        status: "Válido",
-        type: true
+    }
+
+    filterDate: IFilterExtract = {
+        startDate: new Date,
+        endDate: new Date
     }
     
     InputDescription: string = ""
@@ -48,6 +51,15 @@ export class AppComponent implements OnInit {
         return this.extractService.getExtract().subscribe(
             (data) => {
                 this.lstExtract = data as unknown as Array<IExtract>
+            }
+        )
+    }
+
+    extractsByDate(filter: IFilterExtract) {
+        return this.extractService.getExtractByDate(filter).subscribe(
+            (data) => {
+                this.lstExtract = data as unknown as Array<IExtract>
+                console.log(data)
             }
         )
     }
@@ -81,12 +93,14 @@ export class AppComponent implements OnInit {
         this.InputId = ""
     }
 
-    updateExtract(id: string) {
-        this.filterUpdate.amount = 0
-        this.filterUpdate.description = ""
-        this.filterUpdate.id = id
-        this.filterUpdate.type = false
-        this.filterUpdate.status = ""
+    updateExtract() {
+        this.filterUpdate.amount = this.InputAmount
+        this.filterUpdate.description = this.InputDescription
+        this.filterUpdate.id = this.InputId
+
+        this.extractService.update(this.filterUpdate).subscribe(() => this.extracts())
+
+        this.clickCancelEdit()
     }
 
     getTotal() {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmileBank.ContextDB;
 using SmileBank.Interfaces;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SmileBank.Controllers
 {
@@ -34,6 +35,24 @@ namespace SmileBank.Controllers
             return Ok(context.Extract.ToList());
         }
 
+        [HttpPost("ListExtractByDate")]
+        public IActionResult ListByDate(DateTime? startDate, DateTime? endDate)
+        {
+            var query = context.Extract;
+            //if (startDate == null || endDate == null)
+            //{
+            //    startDate = DateTime.Today.AddDays(-2);
+            //    endDate = DateTime.Today;
+            //    return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
+            //}
+            //else
+            //{
+            //    return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
+            //}
+
+            return Ok(query.Where(e => e.Date == startDate && e.Date <= endDate).ToList());
+        }
+
         [HttpPost("InsertExtract")]
         public IActionResult Insert(IExtract extract)
         {
@@ -44,7 +63,7 @@ namespace SmileBank.Controllers
         }
 
         [HttpPost("Update")]
-        public IActionResult Update(IFilterExtract filter)
+        public IActionResult Update(IUpdate filter)
         {
             var found = context.Extract.Where(data => data.Id == filter.id).First();
 
@@ -53,7 +72,6 @@ namespace SmileBank.Controllers
 
             found.Description = filter.description;
             found.Amount = filter.amount;
-            found.Status = filter.status;
 
             context.Update(found);
             context.SaveChanges();

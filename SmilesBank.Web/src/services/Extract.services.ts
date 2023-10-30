@@ -5,6 +5,8 @@ import { ConfigService } from "./Config.Services";
 import { IFilterInsertExtract } from "src/interfaces/IFilterInsertExtract";
 import { ICancel } from "src/interfaces/ICancel";
 import { catchError } from "rxjs";
+import { IUpdateExtract } from "src/interfaces/IUpdateExtract";
+import { IFilterExtract } from "src/interfaces/IFilterExtract";
 
 @Injectable()
 export class ExtractService {
@@ -14,8 +16,16 @@ export class ExtractService {
         return this.http.get<IExtract>(`${this.config.getApi()}/ListExtract`)
     }
 
+    getExtractByDate(filter: IFilterExtract) {
+        return this.http.post<IExtract>(`${this.config.getApi()}/ListExtractByDate`, filter)
+    }
+
     insert(filter: IFilterInsertExtract) {
         return this.http.post<IFilterInsertExtract>(`${this.config.getApi()}/InsertExtract`, filter)
+    }
+
+    update(filter: IUpdateExtract) {
+        return this.http.post<IUpdateExtract>(`${this.config.getApi()}/Update`, filter)
     }
 
     Cancel(id: string) {

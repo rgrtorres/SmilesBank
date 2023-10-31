@@ -44,11 +44,11 @@ export class AppComponent implements OnInit {
     constructor(private readonly extractService: ExtractService) {}
 
     ngOnInit(): void {
-        this.extracts()
+        this.extracts(this.filterDate)
     }
 
-    extracts() {
-        return this.extractService.getExtract().subscribe(
+    extracts(filter: IFilterExtract) {
+        return this.extractService.getExtract(this.filterDate).subscribe(
             (data) => {
                 this.lstExtract = data as unknown as Array<IExtract>
             }
@@ -66,17 +66,6 @@ export class AppComponent implements OnInit {
         return formatted
     }
 
-
-    extractsByDate(filter: IFilterExtract) {
-        console.log(filter)
-        return this.extractService.getExtractByDate(filter).subscribe(
-            (data) => {
-                this.lstExtract = data as unknown as Array<IExtract>
-                console.log(data)
-            }
-        )
-    }
-
     insertExtract() {
         this.filterInsert.amount = this.InputAmount
         this.filterInsert.description = this.InputDescription
@@ -85,7 +74,7 @@ export class AppComponent implements OnInit {
         this.InputDescription = ""
         this.InputId = ""
 
-        return this.extractService.insert(this.filterInsert).subscribe(() => this.extracts())
+        return this.extractService.insert(this.filterInsert).subscribe(() => this.extracts(this.filterDate))
     }
 
     clickUpdate(id: string, desc: string, amount: number) {
@@ -96,7 +85,7 @@ export class AppComponent implements OnInit {
     }
 
     cancelExtract(id: string) {
-        return this.extractService.Cancel(id).subscribe(() => this.extracts())
+        return this.extractService.Cancel(id).subscribe(() => this.extracts(this.filterDate))
     }
 
     clickCancelEdit() {
@@ -111,7 +100,7 @@ export class AppComponent implements OnInit {
         this.filterUpdate.description = this.InputDescription
         this.filterUpdate.id = this.InputId
 
-        this.extractService.update(this.filterUpdate).subscribe(() => this.extracts())
+        this.extractService.update(this.filterUpdate).subscribe(() => this.extracts(this.filterDate))
 
         this.clickCancelEdit()
     }
@@ -126,7 +115,7 @@ export class AppComponent implements OnInit {
     }
 
     auto(){
-        return this.extractService.automatic().subscribe(() => this.extracts())
+        return this.extractService.automatic().subscribe(() => this.extracts(this.filterDate))
     }
 
     getTotal() {

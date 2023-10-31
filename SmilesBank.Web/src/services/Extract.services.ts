@@ -12,12 +12,8 @@ import { IFilterExtract } from "src/interfaces/IFilterExtract";
 export class ExtractService {
     constructor (private readonly http: HttpClient, private readonly config: ConfigService) {}
 
-    getExtract() {
-        return this.http.get<IExtract>(`${this.config.getApi()}/ListExtract`)
-    }
-
-    getExtractByDate(filter: IFilterExtract) {
-        return this.http.post<IExtract>(`${this.config.getApi()}/ListExtractByDate`, filter)
+    getExtract(filter: IFilterExtract) {
+        return this.http.post<IExtract>(`${this.config.getApi()}/ListExtract`, filter)
     }
 
     insert(filter: IFilterInsertExtract) {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmileBank.ContextDB;
 using SmileBank.Interfaces;
+using System.Globalization;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SmileBank.Controllers
@@ -17,35 +18,26 @@ namespace SmileBank.Controllers
             this.context = context;
         }
 
-        [HttpGet("ListExtract")]
-        public IActionResult Index(DateTime? startDate, DateTime? endDate)
+        [HttpPost("ListExtract")]
+        public IActionResult Index(IFilterDate filter)
         {
-            //var query = context.Extract;
-            //if (startDate == null || endDate == null)
-            //{
-            //    startDate = DateTime.Today.AddDays(-2);
-            //    endDate = DateTime.Today;
-            //    return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
-            //}
-            //else
-            //{
-            //    return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
-            //}
-
-            return Ok(context.Extract.ToList());
-        }
-
-        [HttpPost("ListExtractByDate")]
-        public IActionResult ListByDate(IFilterDate filter)
-        {
-            if (filter.startDate == null || filter.endDate == null)
-            {
-                return BadRequest("Datas de início e/ou fim não podem ser nulas.");
-            }
-
             var query = context.Extract;
 
-            var result = query.Where(e => e.Date >= filter.startDate && e.Date <= filter.endDate).ToList();
+            object result = "";
+            DateTime date = DateTime.Now.Date;
+            CultureInfo culturaBrasileira = new CultureInfo("pt-BR");
+            CultureInfo.DefaultThreadCurrentCulture = culturaBrasileira;
+            CultureInfo.DefaultThreadCurrentUICulture = culturaBrasileira;
+
+            if (filter.startDate.Date == date && filter.endDate.Date == date)
+            {
+                filter.startDate = DateTime.Today.AddDays(-2);
+                filter.endDate = DateTime.Today.Date;
+                result = query.Where(e => e.Date >= filter.startDate.Date && e.Date <= filter.endDate.Date.AddDays(1)).ToList();
+            } else
+            {
+                result = query.Where(e => e.Date >= filter.startDate.Date && e.Date <= filter.endDate.Date).ToList();
+            }
 
             return Ok(result);
         }

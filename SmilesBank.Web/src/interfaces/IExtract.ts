@@ -1,4 +1,3 @@
-
 export interface IExtract {
     id: string,
     description: string,

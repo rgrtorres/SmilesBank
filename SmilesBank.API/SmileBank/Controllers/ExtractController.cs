@@ -36,22 +36,20 @@ namespace SmileBank.Controllers
         }
 
         [HttpPost("ListExtractByDate")]
-        public IActionResult ListByDate(DateTime? startDate, DateTime? endDate)
+        public IActionResult ListByDate(IFilterDate filter)
         {
-            var query = context.Extract;
-            //if (startDate == null || endDate == null)
-            //{
-            //    startDate = DateTime.Today.AddDays(-2);
-            //    endDate = DateTime.Today;
-            //    return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
-            //}
-            //else
-            //{
-            //    return Ok(query.Where(e => e.Date >= startDate && e.Date <= endDate).ToList());
-            //}
+            if (filter.startDate == null || filter.endDate == null)
+            {
+                return BadRequest("Datas de início e/ou fim não podem ser nulas.");
+            }
 
-            return Ok(query.Where(e => e.Date == startDate && e.Date <= endDate).ToList());
+            var query = context.Extract;
+
+            var result = query.Where(e => e.Date >= filter.startDate && e.Date <= filter.endDate).ToList();
+
+            return Ok(result);
         }
+
 
         [HttpPost("InsertExtract")]
         public IActionResult Insert(IExtract extract)
@@ -92,6 +90,19 @@ namespace SmileBank.Controllers
             context.SaveChanges();
 
             return Ok();
+        }
+
+        private static readonly Random random = new Random();
+        [HttpGet("automatic")]
+        public IActionResult automatic()
+        {
+            var data = new IExtract("System", random.Next(1, 1000), false, "Válido");
+
+
+            context.Add(data);
+            context.SaveChanges();
+
+            return Ok(context.Extract.ToList());
         }
     }
 }

@@ -32,8 +32,8 @@ export class AppComponent implements OnInit {
     }
 
     filterDate: IFilterExtract = {
-        startDate: new Date,
-        endDate: new Date
+        startDate: new Date(),
+        endDate: new Date()
     }
     
     InputDescription: string = ""
@@ -55,7 +55,20 @@ export class AppComponent implements OnInit {
         )
     }
 
+    convertDate(){
+        const date = new Date()
+        const year = String(date.getFullYear)
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        const day = String(date.getDate()).padStart(2, '0');
+
+        const formatted = `${year}-${month}-${day}`
+
+        return formatted
+    }
+
+
     extractsByDate(filter: IFilterExtract) {
+        console.log(filter)
         return this.extractService.getExtractByDate(filter).subscribe(
             (data) => {
                 this.lstExtract = data as unknown as Array<IExtract>
@@ -101,6 +114,19 @@ export class AppComponent implements OnInit {
         this.extractService.update(this.filterUpdate).subscribe(() => this.extracts())
 
         this.clickCancelEdit()
+    }
+
+    automatic: IExtract = {
+        id: "",
+        description: "",
+        date: new Date(),
+        amount: 0,
+        type: false,
+        status: "",
+    }
+
+    auto(){
+        return this.extractService.automatic().subscribe(() => this.extracts())
     }
 
     getTotal() {

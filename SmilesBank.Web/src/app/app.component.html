@@ -9,7 +9,7 @@
         <div class="m-1">
             <button class="btn btn-primary" (click)="edit === true ? updateExtract() : insertExtract()">{{edit == false ? 'Insert' : 'Edit'}}</button>
 
-            <button class="btn btn-danger" (click)="clickCancelEdit()" [hidden]="!edit">Cancel</button>
+            <button class="btn btn-danger" style="margin-left: 2px;" (click)="clickCancelEdit()" [hidden]="!edit">Cancel</button>
         </div>
     </div>
 
@@ -29,6 +29,8 @@
       </div>
       <div class="m-1">
         <button class="btn btn-primary" (click)="extractsByDate(filterDate)">Filter</button>
+
+        <button class="btn btn-light" style="margin-left: 2px;" (click)="auto()">Refresh</button>
       </div>
     </div>
 
@@ -46,7 +48,7 @@
   
     <tbody>
       <tr *ngFor="let item of lstExtract">
-        <td>{{item.description}} - {{item.id}}</td>
+        <td>{{item.description}}</td>
         <td>R$ {{item.amount}}</td>
         <td>{{item.type == true ? 'Avulso' : 'Sistema'}}</td>
         <td>{{item.status}}</td>

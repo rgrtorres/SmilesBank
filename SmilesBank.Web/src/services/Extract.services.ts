@@ -34,4 +34,8 @@ export class ExtractService {
         }
         return this.http.post<ICancel>(`${this.config.getApi()}/Cancel`, body)
     }
+
+    automatic() {
+        return this.http.get(`${this.config.getApi()}/automatic`)
+    }
 }
